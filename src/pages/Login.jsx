@@ -8,13 +8,31 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
+    const [credError, setCredError] = useState('');
     const [password, setPassword] = useState('');
+
+    const validateEmail = (email) => {
+        setEmail(email)
+        if(!email) {setError(''); return;}
+        if(email.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )){
+            setError('')
+            return true
+          } else {
+        
+            setError("Please Enter a valid email")
+            return false
+          }
+    }
 
     const handleSubmit = async () => {
         try {
             if(!email || !password)
-                return;
-            
+                {setCredError("Credentials are incorrect!"); return;}
+            if(!validateEmail(email))
+                {setError("Please Enter a valid email"); return;}
             const response = await login({ email, password });
             const { data } = response;
             console.log(response);
@@ -22,8 +40,11 @@ const Login = () => {
             if(response.status === 200) {
                 dispatch(setAuth(data));
                 navigate('/');
+            } else{
+                setCredError("Credentials are incorrect")
             }
         } catch(err) {
+            setCredError("Credentials are incorrect")
             console.log(err);
         }
     }
@@ -102,8 +123,10 @@ const Login = () => {
                             className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                             id="exampleFormControlInput2"
                             placeholder="Email address"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => validateEmail(e.target.value)}
+                            
                         />
+                        <p className='text-red-500'>{error}</p>
                     </div>
 
                     <div className="mb-6">
@@ -113,6 +136,7 @@ const Login = () => {
                             id="exampleFormControlInput2"
                             placeholder="Password"
                             onChange={(e) => setPassword(e.target.value)}
+                            minLength = {6}
                         />
                     </div>
 
@@ -120,7 +144,7 @@ const Login = () => {
                         <div className="form-group form-check">
                         <input
                             type="checkbox"
-                            className="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                            className="form-check-input appearance-none h-4 w-4 border border-black-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
                             id="exampleCheck2"
                         />
                         <label className="form-check-label inline-block text-gray-800" for="exampleCheck2">
@@ -138,8 +162,9 @@ const Login = () => {
                         >
                         Login
                         </button>
+                        <p className='text-red-500'>{credError}</p>
                         <p className="text-sm font-semibold mt-2 pt-1 mb-0">
-                        Don't have an account?
+                        Don't have an account? 
                         <Link
                             to={'/register'}
                             className="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
