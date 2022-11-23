@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Symptoms = () => {
+const Diagnose = () => {
     const [shortBreath, setShortBreath] = useState(false);
     const [skippedHeart, setSkippedHeart] = useState(false);
     const [swelling, setSwelling] = useState(false);
@@ -8,13 +8,23 @@ const Symptoms = () => {
     const [weightLoss, setWeightLoss] = useState(false);
     const [dizziness, setDizziness] = useState(false);
     const [abdominalBloating, setAbdominalBloating] = useState(false);
-    const [none, setNone] = useState(false);
+    const [fainting, setFainting] = useState(false);
+
+    const openFileInput = (e) => {
+        document.getElementById("xrayImg").click();
+
+        console.log(e.target.files);
+    }
+
+    const fetchFile = async (e) => {
+        console.log(e.target.files[0]);
+    }
 
     return (
-        <div className='flex mt-16 items-center flex-col'>
+        <div className='flex mt-2 items-center flex-col'>
 
             <h1 className='text-[32px] border-b-2 mb-6 border-black py-2'>Symptoms for Cardiomegaly</h1>
-            
+
             <div>
                 <div className='flex items-center mt-4'>
                     <input id="link-checkbox" type="checkbox" onChange={() => setShortBreath(!shortBreath)} value={shortBreath} className="w-10 h-10 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
@@ -59,50 +69,28 @@ const Symptoms = () => {
                     </label>
                 </div>
                 <div className='flex items-center mt-4'>
-                    <input id="link-checkbox" type="checkbox" onChange={() => setNone(!none)} value={none} className="w-10 h-10 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                    <input id="link-checkbox" type="checkbox" onChange={() => setFainting(!fainting)} value={fainting} className="w-10 h-10 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                     <label for="link-checkbox" className="ml-6 text-[18px] font-medium text-gray-600 dark:text-gray-900">
                         Fainting
                     </label>
                 </div>
             </div>
 
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 mt-4 px-16 border border-blue-700 text-[20px] rounded">
-                Next
+            <div className='flex flex-col justify-center items-center mt-6'>
+
+                <div onClick={(e) => openFileInput(e)} className='border-2 cursor-pointer border-gray-400 rounded-2xl px-40 py-24 m-6'>
+                    <h3 className='text-[22px] font-500'>Drop Digital X-Ray Chest Test</h3>
+                </div>
+
+                <input type="file" onChange={(e) => fetchFile(e)} name="" id="xrayImg" style={{ display: 'none' }} />
+            </div>
+
+            <button class="bg-[#68AC5D] hover:bg-[#9dde93] my-6 text-white font-semibold py-2 mt-4 px-16 border text-[20px] rounded">
+                Generate Report
             </button>
 
-
-            {/* <div>
-                <input id="link-checkbox" type="checkbox" onChange={() => setSymp1(!symp1)} value={symp1} className="w-10 h-10 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label for="link-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                    Discomfort in other areas of upper body, including one or both arms, the back, neck, jaw or stomach
-                </label>
-            </div>
-            <div>
-                <input id="link-checkbox" type="checkbox" onChange={() => setSymp1(!symp1)} value={symp1} className="w-10 h-10 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label for="link-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                    Severe shortness of breath
-                </label>
-            </div>
-            <div>
-                <input id="link-checkbox" type="checkbox" onChange={() => setSymp1(!symp1)} value={symp1} className="w-10 h-10 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label for="link-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                    Chest pain
-                </label>
-            </div>
-            <div>
-                <input id="link-checkbox" type="checkbox" onChange={() => setSymp1(!symp1)} value={symp1} className="w-10 h-10 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label for="link-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                    Fainting
-                </label>
-            </div>
-            <div>
-                <input id="link-checkbox" type="checkbox" onChange={() => setSymp1(!symp1)} value={symp1} className="w-10 h-10 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label for="link-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                    None
-                </label>
-            </div> */}
         </div>
     )
 }
 
-export default Symptoms
+export default Diagnose

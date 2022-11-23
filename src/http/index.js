@@ -16,6 +16,12 @@ export const verifyOtp = (data) => api.post('/api/verify-otp', data);
 
 export const login = (data) => api.post('/api/login', data);
 
+export const logout = () => api.post('/api/logout');
+
+export const getUser = () => api.get('/api/user-details');
+
+export const updateProfile = (data) => api.post('/api/update-profile', data);
+
 
 // Axios Interceptors 
 api.interceptors.response.use(

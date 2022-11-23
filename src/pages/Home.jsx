@@ -1,44 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Checkbox from '../components/Checkbox'
-import PatientDetails from '../components/PatientDetails'
+import banner from '../assets/banner.jpeg';
 
 const Home = () => {
     const navigate = useNavigate();
-    const [shortBreath, setShortBreath] = useState(false);
-    const [skippedHeart, setSkippedHeart] = useState(false);
-    const [swelling, setSwelling] = useState(false);
-    const [fatigue, setFatigue] = useState(false);
-    const [weightLoss, setWeightLoss] = useState(false);
-    const [dizziness, setDizziness] = useState(false);
-    const [abdominalBloating, setAbdominalBloating] = useState(false);
-    const [none, setNone] = useState(false);
-
-    const openFileInput = (e) => {
-        document.getElementById("xrayImg").click();
-
-        console.log(e.target.files);
-    }
-
-    const fetchFile = async (e) => {
-        console.log(e.target.files[0]);
-    }
     
     return (
-        <div className='flex flex-col justify-center items-center mt-20'>
-            <h1 className='text-[32px] border-b-2 border-black py-2'>X-Ray Chest Upload for Cardiomegaly</h1>
-            <div className=''></div>
+        <div>
+            <div className='flex mt-4 items-center'>
+                <div className='w-1/2 flex flex-col justify-center items-center'>
+                    <h1 className='text-[32px] border-b-2 border-black py-2'>Cardiomegaly Detection</h1>
+                    <div className=''></div>
 
-            <p className='max-w-4xl p-6 text-justify text-[18px]'>
-                Note: Chest X-ray images help see the condition of the lungs and heart. If the heart is enlarged on an X-Ray, other tests will usually be needed to find the cause. A useful measurement on X-Ray is the cardio-thoracic ratio, which is the transverse diameter of the heart, compared with that of the thoracic cage. These diameters are taken from PA chest x-rays using the widest point of the chest and measuring as far as the lung pleura, not the lateral skin margins.
-            </p>
+                    <p className='max-w-xl p-6 text-justify text-gray-600 text-[20px]'>
+                        Cardiomegaly (sometimes megacardia or megalocardia) is a medical condition in which the heart is enlarged. As such, it is more commonly referred to simply as "having an enlarged heart". It is usually the result of underlying conditions that make the heart work harder, such as obesity, heart valve disease, high blood pressure (hypertension), and coronary artery disease. Cardiomyopathy is also associated with cardiomegaly.
+                    </p>
 
-            <div onClick={(e) => openFileInput(e)} className='border-2 cursor-pointer border-gray-400 rounded-2xl px-40 py-24 m-6'>
-                <h3 className='text-[22px] font-500'>Drop Digital X-Ray Chest Test</h3>
+                    <p className='max-w-xl p-6 text-justify text-gray-600 text-[20px]'>An enlarged heart (cardiomegaly) isn't a disease, but rather a sign of another condition. The term "cardiomegaly" refers to an enlarged heart seen on any imaging test, including a chest X-ray. Other tests are then needed to diagnose the condition that's causing the enlarged heart.</p>
+                </div>
+
+                <div className='w-1/2 p-5 h-full'>
+                    <img src="https://img.lovepik.com/photo/50064/0806.jpg_wh300.jpg" className='w-280 h-[400px] object-cover rounded-2xl' alt="" />
+                    {/* <img src={banner} className='w-280 h-[550px] object-cover rounded-2xl' alt="" /> */}
+                </div>
             </div>
-
-            <input type="file" onChange={(e) => fetchFile(e)} name="" id="xrayImg" style={{ display: 'none' }} />
         </div>
     )
 }

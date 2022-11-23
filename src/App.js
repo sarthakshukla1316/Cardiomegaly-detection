@@ -6,6 +6,12 @@ import Home from './pages/Home';
 import { useSelector } from 'react-redux';
 import { useLoadingWithRefresh } from './hooks/useLoadingWithRefresh';
 import Symptoms from './pages/Symptoms';
+import News from './pages/News';
+import Download from './pages/Download';
+import Diagnose from './pages/Diagnose';
+import Navbar from './components/Navbar';
+import Profile from './pages/Profile';
+import { NotificationContainer } from 'react-notifications';
 
 function App() {
   const { loading } = useLoadingWithRefresh();
@@ -14,6 +20,11 @@ function App() {
   return (
     loading ? <h1>Loading...</h1> : (
     <Router>
+      {
+        user && (
+          <Navbar />
+        )
+      }
       <Routes>
         <Route exact path="/register" element={<GuestRoute>
           <Register />
@@ -27,7 +38,25 @@ function App() {
         <Route exact path="/symptoms" element={<ProtectedRoute>
           <Symptoms />
         </ProtectedRoute>} />
+
+        <Route exact path="/diagnose" element={<ProtectedRoute>
+          <Diagnose />
+        </ProtectedRoute>} />
+
+        <Route exact path="/download" element={<ProtectedRoute>
+          <Download />
+        </ProtectedRoute>} />
+
+        <Route exact path="/profile" element={<ProtectedRoute>
+          <Profile />
+        </ProtectedRoute>} />
+
+        <Route path="/news" element={<PublicRoute>
+          <News />
+        </PublicRoute>} />
       </Routes>
+
+      <NotificationContainer />
     </Router>
     )
   );
@@ -44,6 +73,13 @@ const GuestRoute = ({ children }) => {
       state: { from: location },
     }
   } /> : children
+}
+
+const PublicRoute = ({ children }) => {
+  const location = useLocation();
+  const { isAuth } = useSelector(state => state.auth);
+
+  return children
 }
 
 const ProtectedRoute = ({ children }) => {
