@@ -10,8 +10,8 @@ class AuthController {
 
     async sendOtp(req, res) {
         console.log(req.body, 'body');
-        const { name, email, password, confirmPassword } = req.body;
-        if( !name || !email || !password || !confirmPassword ) {
+        const { name, email, password, confirmPassword, type } = req.body;
+        if( !name || !email || !password || !confirmPassword || !type ) {
             res.status(400).json({ message: 'All fields are required !'});
             return;
         }
@@ -49,7 +49,7 @@ class AuthController {
             const toEmailCustomer = email;
             mailSender(toEmailCustomer, markupCustomer, subjectCustomer);
             const hashedPassword = await bcrypt.hash(password, 10);
-            await userService.createUser({ name, email, password: hashedPassword });
+            await userService.createUser({ name, email, password: hashedPassword, type });
             res.status(200).json({
                 hash: `${hash}.${expires}`,
                 email,
@@ -226,18 +226,18 @@ class AuthController {
         
     }
 
-    // async logout(req, res) {
-    //     // delete refresh token from db
+    async logout(req, res) {
+        // delete refresh token from db
 
-    //     const { refreshToken } = req.cookies;
-    //     await tokenService.removeToken(refreshToken);
+        const { refreshToken } = req.cookies;
+        await tokenService.removeToken(refreshToken);
 
-    //     // delete cookie from res
-    //     res.clearCookie('refreshToken');
-    //     res.clearCookie('accessToken');
+        // delete cookie from res
+        res.clearCookie('refreshToken');
+        res.clearCookie('accessToken');
 
-    //     res.json({ user: null, auth: false });
-    // }
+        res.json({ user: null, auth: false });
+    }
 }
 
 

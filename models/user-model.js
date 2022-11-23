@@ -14,6 +14,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    type: {
+        type: String,
+        required: true,
+    },
+    height: {
+        type: String,
+        required: false,
+    },
+    weight: {
+        type: String,
+        required: false,
+    },
+    age: {
+        type: String,
+        required: false,
+    },
     verified: {
         type: Boolean,
         default: false,
