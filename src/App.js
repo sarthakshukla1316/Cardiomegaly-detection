@@ -7,11 +7,11 @@ import { useSelector } from 'react-redux';
 import { useLoadingWithRefresh } from './hooks/useLoadingWithRefresh';
 import Symptoms from './pages/Symptoms';
 import News from './pages/News';
-import Download from './pages/Download';
 import Diagnose from './pages/Diagnose';
 import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
 import { NotificationContainer } from 'react-notifications';
+import PreviousReports from './pages/PreviousReports';
 
 function App() {
   const { loading } = useLoadingWithRefresh();
@@ -43,8 +43,8 @@ function App() {
           <Diagnose />
         </ProtectedRoute>} />
 
-        <Route exact path="/download" element={<ProtectedRoute>
-          <Download />
+        <Route path="/previous-reports" element={<ProtectedRoute>
+          <PreviousReports />
         </ProtectedRoute>} />
 
         <Route exact path="/profile" element={<ProtectedRoute>

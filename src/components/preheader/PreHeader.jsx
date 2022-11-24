@@ -19,9 +19,9 @@ const PreHeader = () => {
               Cardiomegaly detection using X-Ray Image
             </p>
           </div>
-          {/* <div className="">
+          <div className="">
             <div className="" id="google_element"></div>
-          </div> */}
+          </div>
         </marquee>
       </div>
   );

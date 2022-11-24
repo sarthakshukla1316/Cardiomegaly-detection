@@ -17,6 +17,7 @@ const Register = () => {
     const [type, setType] = useState('doctor');
     const [OTP, setOTP] = useState('');
     const [error, setError] = useState('');
+    const [validOtp, setValidOtp] = useState(false);
 
     const { hash } = useSelector((state) => state.auth.otp);
 
@@ -68,7 +69,7 @@ const Register = () => {
             }
             for(let i=1;i<=6;i++) {
                 let as=OTP.charAt(i)-'0';
-                if(as >= 48 && as <= 57) {
+                if(as >= 0 && as <= 9) {
                     continue;
                 } else {
                     setError('OTP must contain only numbers');
@@ -87,6 +88,16 @@ const Register = () => {
             setError(err?.response?.data?.message);
             console.log(err);
         }
+    }
+
+    const handleSetOtp = async (otp) => {
+        setOTP(otp);
+        if(otp.length === 6) {
+            setValidOtp(true);
+        } else {
+            setValidOtp(false);
+        }
+        console.log(validOtp, 'otp');
     }
 
     return (
@@ -109,7 +120,7 @@ const Register = () => {
                         !showOtp ? (
                             <form>
                             {
-                                error && <span className='text-red-500 text-[16px]'>{error}</span>
+                                error && <span className='text-red-500 text-[18px]'>{error}</span>
                             }
                             <div class="mb-6">
                                 <input
@@ -174,7 +185,6 @@ const Register = () => {
                                     Remember me
                                 </label>
                                 </div>
-                                <a href="#!" class="text-gray-800">Forgot password?</a>
                             </div>
 
                             <div class="text-center lg:text-left">
@@ -186,7 +196,7 @@ const Register = () => {
                                     Register
                                 </button>
                                 <p class="text-sm font-semibold mt-2 pt-1 mb-0">
-                                Don't have an account?&nbsp;
+                                Don't have an account? &nbsp;
                                 <Link
                                     to='/login'
                                     class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
@@ -212,7 +222,7 @@ const Register = () => {
                                     <h3 className='text-gray-700 text-[24px] font-normal'>Enter OTP</h3>
                                     <OtpInput
                                         value={OTP}
-                                        onChange={(otp) => setOTP(otp)}
+                                        onChange={(otp) => handleSetOtp(otp)}
                                         numInputs={6}
                                         containerStyle={{ marginLeft: '-10px' }}
                                         inputStyle={{ border: '1px solid #999', margin: 10, width: '40px', height: '40px' }}
@@ -230,17 +240,23 @@ const Register = () => {
                                         Remember me
                                     </label>
                                     </div>
-                                    <a href="#!" class="text-gray-800">Forgot password?</a>
+                                    // <a href="#!" class="text-gray-800">Forgot password?</a>
                                 </div>
 
                                 <div class="text-center lg:text-left">
-                                    <button
+                                    {validOtp ? <button
                                         type="button"
                                         className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                                         onClick={() => handleOtp()}
                                     >
                                         Verify Otp
-                                    </button>
+                                    </button> : <button
+                                        type="button"
+                                        className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out opacity-50 cursor-not-allowed"
+                                        // onClick={() => handleOtp()}
+                                    >
+                                        Verify
+                                    </button>}
                                     <p class="text-sm font-semibold mt-2 pt-1 mb-0">
                                     Don't have an account?
                                     <a

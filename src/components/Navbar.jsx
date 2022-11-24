@@ -32,7 +32,7 @@ const Navbar = () => {
                     <div className='flex max-w-4xl justify-between items-center space-x-36'>
                         <Link to='/' className='text-xl font-semibold text-[#68AC5D] rounded-full'>Home</Link>
                         <Link to='/diagnose' className='text-xl font-semibold text-[#68AC5D] rounded-full'>Diagnose</Link>
-                        <Link to='/download' className='text-xl font-semibold text-[#68AC5D] rounded-full'>Download report</Link>
+                        <Link to='/previous-reports' className='text-xl font-semibold text-[#68AC5D] rounded-full'>Previous reports</Link>
                         <Link to='/news' className='text-xl font-semibold text-[#68AC5D] rounded-full'>News</Link>
                         {/* <Link to='/news' className='text-xl text-white bg-[#EAAF44] py-2 px-4 rounded-full'>News</Link> */}
                     </div>
@@ -40,7 +40,7 @@ const Navbar = () => {
                     <div className=''>
                         {user ? (
                             <div className='flex space-x-4 items-center justify-around'>
-                            <Link to='/profile' className='text-xl font-semibold text-[#68AC5D] mr-10 border-b border-gray-600 pb-1'>Profile</Link>
+                            <Link to='/profile' className='text-xl font-semibold text-[#68AC5D] mr-10 border-b border-gray-600 pb-1'>Welcome {user.name}</Link>
                             <button onClick={() => handleLogout()} class="bg-[#68AC5D] hover:bg-[#9edc94] text-white font-bold py-2 px-4 rounded">
                                 Logout
                             </button>

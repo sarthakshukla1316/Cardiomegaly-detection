@@ -8,6 +8,7 @@ const Profile = () => {
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
     const [age, setAge] = useState('');
+    const [gender, setGender] = useState('');
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -22,13 +23,15 @@ const Profile = () => {
                 setWeight(data.weight);
             if(data.age)
                 setAge(data.age);
+            if(data.gender)
+                setGender(data.gender);
         }
         getUserDetails();
     }, []);
 
     const handleUpdate = async () => {
         try {
-            if(!name || !email || !height || !weight || !age) {
+            if(!name || !email || !height || !weight || !age || !gender) {
                 setError('All fields are required !');
                 return;
             }
@@ -36,7 +39,7 @@ const Profile = () => {
                 setError('Invalid details !');
                 return;
             }
-            const { data } = await updateProfile({ name, email, height, weight, age });
+            const { data } = await updateProfile({ name, email, height, weight, age, gender });
             if(data.success === true) {
                 NotificationManager.success(data.message, 'Success');
                 return;
@@ -84,6 +87,13 @@ const Profile = () => {
                             Age
                         </label>
                         <input onChange={(e) => setAge(e.target.value)} value={age} class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="number" placeholder="" min="1" max="200" />
+                    </div>
+
+                    <div class="w-full md:w-1/2 px-3 mt-2 mb-6 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
+                            Gender
+                        </label>
+                        <input onChange={(e) => setGender(e.target.value)} class="appearance-none block w-full bg-gray-100 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" value={gender} type="text" placeholder="Male" />
                     </div>
                 </div>
 

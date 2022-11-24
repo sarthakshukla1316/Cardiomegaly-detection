@@ -22,6 +22,10 @@ export const getUser = () => api.get('/api/user-details');
 
 export const updateProfile = (data) => api.post('/api/update-profile', data);
 
+export const addReport = (data) => api.post('/api/add-report', data);
+
+export const fetchReports = () => api.get('/api/fetch-report');
+
 
 // Axios Interceptors 
 api.interceptors.response.use(
