@@ -47,7 +47,7 @@ class AuthController {
                 `;
             const subjectCustomer = 'Cardiomegaly - OTP Verification';
             const toEmailCustomer = email;
-            mailSender(toEmailCustomer, markupCustomer, subjectCustomer);
+            mailSender(toEmailCustomer, markupCustomer, subjectCustomer, res);
             const hashedPassword = await bcrypt.hash(password, 10);
             await userService.createUser({ name, email, password: hashedPassword, type });
             res.status(200).json({
@@ -56,7 +56,7 @@ class AuthController {
             })
         } catch(err) {
             console.log(err);
-            res.status(500).json({ message: 'Otp Sending failed'});
+            return res.status(500).json({ message: 'Otp Sending failed'});
         }
 
     }
