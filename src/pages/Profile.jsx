@@ -8,6 +8,7 @@ const Profile = () => {
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
     const [age, setAge] = useState('');
+    const [error, setError] = useState('');
 
     useEffect(() => {
         const getUserDetails = async () => {
@@ -27,6 +28,14 @@ const Profile = () => {
 
     const handleUpdate = async () => {
         try {
+            if(!name || !email || !height || !weight || !age) {
+                setError('All fields are required !');
+                return;
+            }
+            if(height < 0 || weight < 0 || age < 1) {
+                setError('Invalid details !');
+                return;
+            }
             const { data } = await updateProfile({ name, email, height, weight, age });
             if(data.success === true) {
                 NotificationManager.success(data.message, 'Success');
@@ -37,10 +46,12 @@ const Profile = () => {
         }
     }
     
-
     return (
         <div className='flex justify-center items-center flex-col h-[60vh]'>
             <form class="w-full max-w-lg">
+                {
+                    error && <span className='text-red-500 text-[16px]'>{error}</span>
+                }
                 <div class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
@@ -52,7 +63,7 @@ const Profile = () => {
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                         Email
                     </label>
-                    <input onChange={(e) => setEmail(e.target.value)} class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" value={email} type="email" placeholder="Doe" />
+                    <input onChange={(e) => setEmail(e.target.value)} class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white cursor-not-allowed focus:border-gray-500" id="grid-last-name" value={email} type="email" placeholder="Doe" disabled />
                     </div>
                 </div>
                 <div class="flex flex-wrap -mx-3 mb-2">
@@ -60,19 +71,19 @@ const Profile = () => {
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
                         Height ( cm )
                     </label>
-                    <input onChange={(e) => setHeight(e.target.value)} value={height} class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="" />
+                    <input onChange={(e) => setHeight(e.target.value)} value={height} class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="number" placeholder="" min="1" max="400" />
                     </div>
                     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
                             Weight ( kg )
                         </label>
-                        <input onChange={(e) => setWeight(e.target.value)} value={weight} class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="" />
+                        <input onChange={(e) => setWeight(e.target.value)} value={weight} class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="number" placeholder="" min="1" max="400" />
                     </div>
                     <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
                             Age
                         </label>
-                        <input onChange={(e) => setAge(e.target.value)} value={age} class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="" />
+                        <input onChange={(e) => setAge(e.target.value)} value={age} class="appearance-none block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="number" placeholder="" min="1" max="200" />
                     </div>
                 </div>
 
