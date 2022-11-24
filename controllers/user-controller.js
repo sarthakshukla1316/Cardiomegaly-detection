@@ -19,6 +19,15 @@ class UserController {
             return res.status(500).json({ message: 'Internal Server Error' });
         }
     }
+
+    async uploadFile(req, res) {
+        try {
+            console.log(req.body);
+            return res.status(200).json({ success: true });
+        } catch(err) {
+            return res.status(500).json({ message: 'Internal Server Error' });
+        }
+    }
 }
 
 

@@ -21,14 +21,22 @@ const userSchema = new mongoose.Schema({
     height: {
         type: String,
         required: false,
+        default: 'NA'
     },
     weight: {
         type: String,
         required: false,
+        default: 'NA'
     },
     age: {
         type: String,
         required: false,
+        default: 'NA'
+    },
+    gender: {
+        type: String,
+        required: false,
+        default: 'NA'
     },
     verified: {
         type: Boolean,
